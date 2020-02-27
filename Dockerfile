@@ -5,6 +5,6 @@ COPY src/ ./src
 RUN mvn package -DskipTests
 
 FROM adoptopenjdk/openjdk8:jdk8u202-b08-alpine-slim
-COPY --from=builder /app/target/web-api-*.jar /web-api.jar
+COPY --from=builder /app/target/web-api.jar /web-api.jar
 
 CMD ["java","-Djava.security.egd=file:/dev/./urandom","-Dserver.port=${PORT}","-jar","/web-api.jar"]
