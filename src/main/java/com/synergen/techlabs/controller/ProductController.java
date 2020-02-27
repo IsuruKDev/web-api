@@ -16,7 +16,7 @@ import java.util.Optional;
 @RequestMapping(path = "/products")
 public class ProductController {
 
-    @Autowired
+   /* @Autowired
     ProductRepository productRepository;
 
     @PostMapping(path = "/add")
@@ -48,5 +48,5 @@ public class ProductController {
         return "Deleted product Id"+productId;
     }
 
-
+*/
 }

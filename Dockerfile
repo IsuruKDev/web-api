@@ -1,5 +1,10 @@
-FROM openjdk:8-jdk-alpine
-VOLUME /tmp
-ARG JAR_FILE
-COPY ${JAR_FILE} web-api.jar
-ENTRYPOINT ["java","-jar","/web-api.jar"]
+FROM maven:3.5-jdk-8-alpine as builder
+WORKDIR /app
+COPY pom.xml .
+COPY src/ ./src
+RUN mvn package -DskipTests
+
+FROM adoptopenjdk/openjdk8:jdk8u202-b08-alpine-slim
+COPY --from=builder /app/target/web-api-*.jar /web-api.jar
+
+CMD ["java","-Djava.security.egd=file:/dev/./urandom","-Dserver.port=${PORT}","-jar","/web-api.jar"]
